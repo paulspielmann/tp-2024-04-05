@@ -1,3 +1,9 @@
+# Instructions de base
+
+Évidemment, forker le dépôt dans votre répertoire personnel. Il est attendu qu'à chaque exercice vous fassiez un commit et que vous le pushiez.
+
+A la fin, envoyez-moi l'URL de votre dépôt Git.
+
 # Installation de l'environnement
 
 `make v3 deps` la première fois que vous ouvrez ce dépôt
