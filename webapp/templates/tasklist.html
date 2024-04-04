@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% block content %}
+<div id="tasks-container">
+    {% if tasks | length > 0 %}
+    {% for task in tasks %}
+    <div
+        class="task priority-{{ task.priority }}{% if task.is_done %}task-status-done{% else %}task-status-incomplete{% endif %}{% if task.is_deleted %}task-status-deleted{% endif %}">
+        {{task.name}}
+        <form method="post" action="{{ url_for('toggle_task_status')}}"><button type="submit" class="task-state-toggle">🧙‍♀️</button></form>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="task priority-normal">
+        No task yet... your task may be to create a task!
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

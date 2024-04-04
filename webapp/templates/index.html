@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>todolist {{ page_title }}</title>
+    <style type="text/css">
+        body {
+            margin: 0 auto;
+            max-width: 80%;
+            font-size: 36pt;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        div.task {
+            background-color: rgba(10, 10, 10, 0.1);
+            border: 1px solid black;
+            width: 20%;
+            height: 4rem;
+            margin: 1%;
+            padding: 2% 0;
+            filter: drop-shadow(0 -6mm 4mm rgb(160, 0, 210));
+            text-align: center;
+            float: left;
+            font-size: 16pt;
+        }
+
+        div.task.priority-urgent {
+            font-weight: bold;
+            background-color: rgba(200, 30, 30, 0.3);
+        }
+
+        div.task.priority-normal {
+            font-weight: bold;
+            background-color: rgba(100, 100, 220, 0.3);
+        }
+
+        div.task.priority-low {
+            font-weight: bold;
+            background-color: rgba(0, 220, 50, 0.3);
+        }
+
+        div.task.task-incomplete::after {
+            content: '⏳';
+        }
+
+        div.task.task-completed::after {
+            content: '✅';
+        }
+
+        div.task.deleted-status-True {
+            text-decoration: line-through;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            height: 5cm;
+            font-size: 3rem;
+        }
+
+        /* Yellow Sticky Note */
+        .yellow-sticky {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        /* Blue Sticky Note */
+        .blue-sticky {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+
+        /* Green Sticky Note */
+        .green-sticky {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        /* Pink Sticky Note */
+        .pink-sticky {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        /* Orange Sticky Note */
+        .orange-sticky {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        /* Purple Sticky Note */
+        .purple-sticky {
+            background-color: #d6d8f7;
+            border: 1px solid #b3b8ff;
+            color: #3f51b5;
+        }
+
+        select,
+        option {
+            font-size: 36pt;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="menu">
+        <ul>
+            <li><a class="link-all-tasks" href="{{ url_for('all_tasks') }}">View all tasks, including completed ones</a></li>
+            <li><a class="link-tasks" href="{{ url_for('tasks') }}">View tasks list</a></li>
+            <li><a class="lonk-create-task" href="{{ url_for('create_task') }}">Create task</a></li>
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

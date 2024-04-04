@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+{% block content %}
+<h1>Create a new task</h1>
+<form method="post">
+    <input type="text" name="name" placeholder="Name for the task" />
+    Priority: <select name="priority">
+        {% for p in priority_list %}
+        <option value="{{ p}}">{{ p }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" />
+</form>
+{% endblock %}
