@@ -58,7 +58,7 @@ def test_1_creation_et_completion():
             name_field.send_keys(c)
             sleep(randint(1, 100) / 500.0)
         sleep(1)
-        priority_field = Select(driver.find_element(By.NAME, "form select.field-priority"))
+        priority_field = Select(driver.find_element(By.CSS_SELECTOR, "form select.field-priority"))
         #   Selecting a priority option from dropdown by value (you may need to adapt this based on your HTML)
         priorities = ["low", "normal", "urgent"][randint(0, 2)]
         priority_field.select_by_value(priorities)
@@ -70,14 +70,14 @@ def test_1_creation_et_completion():
         sleep(1)
         assert driver.current_url.endswith(TASKS_URL)
         new_task_list = driver.find_elements(
-            By.XPATH, f"""//*[contains(text()='{text_to_write}')]"""
+            By.XPATH, f"""//*[contains(text(),'{text_to_write}')]"""
         )
         assert len(new_task_list) == 1
         new_task = new_task_list[0]
         new_task.find_element(By.CSS_SELECTOR, "button.task-state-toggle").click()
         sleep(2)
         new_task_list = driver.find_elements(
-            By.XPATH, f"""//*[contains(text()='{text_to_write}')]"""
+            By.XPATH, f"""//*[contains(text(),'{text_to_write}')]"""
         )
         assert len(new_task_list) == 0
         # Navigate to the all_tasks view that also contains the completed tasks
@@ -87,7 +87,7 @@ def test_1_creation_et_completion():
         assert driver.current_url.endswith(ALL_TASKS_URL)
         # Now check that the task is there and that it is completed
         the_task_match_list = driver.find_elements(
-            By.XPATH, f"""//*[contains(text()='{text_to_write}')]"""
+            By.XPATH, f"""//*[contains(text(),'{text_to_write}')]"""
         )
         assert len(the_task_match_list) == 1
         the_task = the_task_match_list[0]
