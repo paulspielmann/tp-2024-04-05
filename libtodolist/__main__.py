@@ -1,4 +1,4 @@
-from .tasks import Task, TaskList, PriorityLevel
+from tasks import Task, TaskList, PriorityLevel
 from typing import List
 import sys
 
@@ -7,10 +7,11 @@ def go_repl():
     def repl_help():
         print("""todolist CLI interface
     a: list all tasks
+    c: create new task
     u: list urgent priority tasks
     n: list normal priority tasks
     l: list low priority tasks
-    c: create new task
+    p: update task priority
     m: mark task as done
     d: delete task
     s: save task list
@@ -36,6 +37,12 @@ def go_repl():
     def handle_a():
         show_tasklist([a for a in list_manager.tasks if not a.is_deleted])
 
+    def handle_c():
+        title = input("\tPlease input task description: ")
+        task = Task(priority=priority_h(), name=title)
+        list_manager.tasks.append(task)
+        print(f"\tCreated new task {title} with priority {task.priority}")
+
     def handle_u():
         l = [task for task in list_manager.tasks if task.priority == PriorityLevel.URGENT and not task.is_deleted]
         show_tasklist(l)
@@ -48,9 +55,26 @@ def go_repl():
         l = [task for task in list_manager.tasks if task.priority == PriorityLevel.LOW and not task.is_deleted]
         show_tasklist(l)
 
-    def handle_c():
+    def handle_d():
+        l = input("\tInput the #number of the task you want to delete (empty input to cancel): ")
+        if not len(l):
+            print("\tCancelling")
+            return
+        task_num = int(l) - 1
+        assert task_num >= 0
+        assert task_num < len(list_manager.tasks)
+        list_manager.tasks[task_num].is_deleted = True
+        print(f"\tTask {task_num + 1} deleted")
+
+    def handle_p():
+        task_num = None
+        task_num = input("\Input the #number of the task whose priority you want to update (empty input to cancel)").lower()
+        task_num = int(task_num) - 1
+        assert task_num >= 0 and task_num < len(list_manager.tasks) 
+        list_manager.tasks[task_num].priority = priority_h()
+
+    def priority_h():
         priority = None
-        title = input("\tPlease input task description: ")
         prios = {
             'l': PriorityLevel.LOW,
             'n': PriorityLevel.NORMAL,
@@ -62,20 +86,7 @@ def go_repl():
                 priority = 'n'
             if priority[0] not in prios:
                 priority = None
-            priority = prios[priority[0]]
-        list_manager.tasks.append(Task(priority=priority, name=title))
-        print(f"\tCreated new task {title} with priority {priority}")
-
-    def handle_d():
-        l = input("\tInput the #number of the task you want to delete (empty input to cancel): ")
-        if not len(l):
-            print("\tCancelling")
-            return
-        task_num = int(l) - 1
-        assert task_num >= 0
-        assert task_num < len(list_manager.tasks)
-        list_manager.tasks[task_num].is_deleted = True
-        print(f"\tTask {task_num + 1} deleted")
+            return prios[priority[0]]
 
     def handle_m():
         l = input("\tInput the #number of the task you want to mark as done (empty input to cancel): ")
@@ -101,10 +112,11 @@ def go_repl():
 
     fun_map = {
         'a': handle_a,
+        'c': handle_c,
         'u': handle_u,
         'n': handle_n,
         'l': handle_l,
-        'c': handle_c,
+        'p': handle_p,
         'm': handle_m,
         'd': handle_d,
         's': handle_s,
@@ -114,7 +126,7 @@ def go_repl():
 
     repl_help()
     while True:
-        a = input("a/u/n/l/c/d/s/q/?: ")
+        a = input("a/c/u/n/l/p/m/d/s/q/?: ")
         f = fun_map.get(a, repl_help)
         f()
 
