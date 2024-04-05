@@ -58,7 +58,7 @@ def test_1_creation_et_completion():
             name_field.send_keys(c)
             sleep(randint(1, 100) / 500.0)
         sleep(1)
-        priority_field = Select(driver.find_element(By.NAME, "form select.field-priority"))
+        priority_field = Select(driver.find_element(By.CSS_SELECTOR, "form select.field-priority"))
         #   Selecting a priority option from dropdown by value (you may need to adapt this based on your HTML)
         priorities = ["low", "normal", "urgent"][randint(0, 2)]
         priority_field.select_by_value(priorities)
