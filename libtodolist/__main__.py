@@ -1,4 +1,4 @@
-from tasks import Task, TaskList, PriorityLevel
+from .tasks import Task, TaskList, PriorityLevel
 from typing import List
 import sys
 
